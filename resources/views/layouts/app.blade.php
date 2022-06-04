@@ -12,11 +12,12 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 
         @livewireStyles
 
         <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ mix('js/app.js') }}" ></script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -37,6 +38,20 @@
 
             <div class="py-6">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            <i class="fa fa-check"></i>
+                            {{session('success')}}
+                        </div>
+                    @endif
                     {{ $slot }}
                 </div>
             </div>
@@ -44,7 +59,9 @@
         </div>
 
         @stack('modals')
-
+        @isset($js)
+            {{ $js }}
+        @endif
         @livewireScripts
     </body>
 </html>
