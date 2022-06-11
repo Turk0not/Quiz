@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description')->nullable();
+            $table->string('slug');
             $table->enum('status',['publish','draft','passive'])->default('draft');
-            $table->timestamp('finished_At')->nullable();
+            $table->timestamp('finished_at')->nullable();
             $table->timestamps();
         });
     }

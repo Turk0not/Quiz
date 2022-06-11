@@ -55,7 +55,7 @@
 
                     </td>
                     <td>
-                        <span title="$quiz->finished_at">
+                        <span title="{{$quiz->finished_at}}">
                             {{$quiz->finished_at ? $quiz->finished_at->diffForHumans() : '-'}}
                         </span>
                     </td>
