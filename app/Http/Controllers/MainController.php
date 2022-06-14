@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Result;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
+use App\Models\Answer;
 
 class MainController extends Controller
 {
@@ -27,6 +29,38 @@ class MainController extends Controller
 
     public function result(Request $request,$slug)
     {
-        return $request->post();
+        $quiz = Quiz::with('questions')->whereSlug($slug)->first() ?? abort(404, 'SAYFA BULUNAMADI');
+        $correct=0;
+
+        foreach ($quiz->questions as $question)
+        {
+            Answer::create([
+                'user_id' => auth()->user()->id,
+                'question_id' => $question->id,
+                'answer' => $request->post($question->id)
+            ]);
+
+
+            if ($question->correct_answer===$request->post($question->id))
+            {
+                $correct+=1;
+            }
+        }
+
+
+        $point = round((100 / count($quiz->questions)) * $correct );
+        $wrong = count($quiz->questions)-$correct;
+
+        Result::create([
+            'user_id' => auth()->user()->id,
+            'quiz_id' =>$quiz->id,
+            'point' =>$point,
+            'correct'=>$correct,
+            'wrong' =>$wrong,
+        ]);
+
+        return redirect()->route('quiz.detail',$quiz->slug)->withSuccess("Başarıyla Quizi Bitirdin. Puanın: ".$point);
+
+        //return $request->post();
     }
 }

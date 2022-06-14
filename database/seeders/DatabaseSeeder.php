@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             QuizSeeder::class,
             QuestionSeeder::class,
             AnswerSeeder::class,
+            ResultSeeder::class,
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
