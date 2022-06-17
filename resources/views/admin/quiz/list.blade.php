@@ -48,7 +48,7 @@
                             @elseif($quiz->finished_at>now())
                                 <span class="badge badge-success">Aktif</span>
                             @else
-                                <span class="badge bg-secondary">Tarihi Dolmuş</span>
+                                <span class="badge bg-secondary text-white">Tarihi Dolmuş</span>
                             @endif
                             @break
                             @case('passive')
