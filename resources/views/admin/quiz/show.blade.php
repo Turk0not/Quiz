@@ -3,28 +3,15 @@
     <div class="card">
         <div class="card-body">
             <p class="card-text">
+            <h5 class="card-title">
+                <a href="{{route('quizzes.index')}}" class="btn btn-sm btn-secondary"><i class="fa fa-arrow-left"></i>
+                    Quizlere Dön
+                </a>
+            </h5>
                 <div class="row">
                     <div class="col-md-4">
                         <ul class="list-group">
-                            @if($quiz->my_rank)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Sıralama
-                                    <span class="badge badge-success badge-pill">#{{$quiz->my_rank}}</span>
-                                </li>
-                            @endif
-                            @if($quiz->my_result)
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Puan
-                                <span class="badge badge-primary badge-pill">{{$quiz->my_result->point}}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Doğru / Yanlış Sayısı
-                                <div class="float-right">
-                                    <span class="badge badge-success badge-pill">{{$quiz->my_result->correct}} Doğru</span>
-                                    <span class="badge badge-danger badge-pill">{{$quiz->my_result->wrong}} Yanlış</span>
-                                </div>
-                            </li>
-                            @endif
+
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Soru Sayısı
                                 <span class="badge badge-secondary badge-pill">{{$quiz->questions_count}}</span>
@@ -67,13 +54,29 @@
                     </div>
                     <div class="col-md-8">
                         {{ $quiz->description }}
-                        @if($quiz->my_result)
-                            <a href="{{ route('quiz.join',$quiz->slug) }}" class="btn btn-warning btn-block">Quizi Görüntüle</a>
-                        @elseif($quiz->finished_at>now())
-                            <a href="{{ route('quiz.join',$quiz->slug) }}" class="btn btn-primary btn-block">Quize Katıl</a>
-                        @endif
+                        <table class="table table-bordered mt-3">
+                            <thead>
+                            <tr>
+                                <th scope="col">Ad Soyad</th>
+                                <th scope="col">Puan</th>
+                                <th scope="col">Doğru</th>
+                                <th scope="col">Yanlış</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($quiz->results as $result)
+                            <tr>
+                                <td>{{ $result->user->name }}</td>
+                                <td>{{ $result->point }}</td>
+                                <td>{{ $result->correct }}</td>
+                                <td>{{ $result->wrong }}</td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+
             </p>
         </div>
     </div>

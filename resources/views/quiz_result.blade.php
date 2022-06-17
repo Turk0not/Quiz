@@ -3,6 +3,7 @@
     <div class="card">
         <div class="card-body">
 
+            <h3>Aldığınız Puan : <strong>{{ $quiz->my_result->point }}</strong></h3>
             <div class="bg bg-light" style="margin-bottom:20px">
                 <i class="fa fa-circle"></i> İşaretlediğin Şık<br>
                 <i class="fa fa-check text-success"></i> Doğru Cevap<br>
@@ -10,6 +11,8 @@
             </div>
 
                 @foreach($quiz->questions as $question)
+
+
                 @if($question->correct_answer == $question->my_answer->answer)
                     <i class="fa fa-check text-success"></i>
                 @else
@@ -21,6 +24,8 @@
                         <img src="{{asset($question->image)}}" class="img-responsive" style="width:50%">
                 @endif
 
+                    <br>
+                    <small>Bu soruya <strong>%{{ $question->true_percent }}</strong> oranında doğru cevap verildi.</small>
 
 
                     <div class="form-check mt-2" >  <!-- 1. Şık -->
